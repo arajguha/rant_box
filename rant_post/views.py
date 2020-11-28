@@ -1,7 +1,8 @@
-from rest_framework import generics
+from rest_framework import generics, mixins
 from .serializers import RantPostSerializer
 from .models import RantPost
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from .permissions import RantPostUpdateDeletePermissions
 
 
 class RantPostListCreateView(generics.ListCreateAPIView):
@@ -16,5 +17,5 @@ class RantPostListCreateView(generics.ListCreateAPIView):
 class RantPostRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = RantPostSerializer
     queryset = RantPost.objects.all()
-
+    permission_classes = [IsAuthenticatedOrReadOnly, RantPostUpdateDeletePermissions]
 
