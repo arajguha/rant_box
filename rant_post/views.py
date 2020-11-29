@@ -1,4 +1,4 @@
-from rest_framework import generics, mixins
+from rest_framework import generics
 from .serializers import RantPostSerializer
 from .models import RantPost
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
