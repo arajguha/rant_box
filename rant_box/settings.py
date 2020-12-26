@@ -119,28 +119,35 @@ LOGGING = {
     'disable_existing_loggers': False,
     'handlers': {
         'console': {
-            'class': 'logging.StreamHandler'
+            'class': 'logging.StreamHandler',
+            'formatter': 'default',
         },
-        'file': {
+        'test_logs': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
             'filename': 'logs/test.log',
             'formatter': 'default',
         },
+        'root_logs': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': 'logs/root.log',
+            'formatter': 'default',
+        },
     },
     'formatters': {
         'default': {
-            'format': '%(asctime)s  %(levelname)s %(message)s',
+            'format': '[%(asctime)s]  [%(levelname)s] %(message)s',
         },
     },
 
     'loggers': {
         'root': {
-            'handlers': ['console', 'file'],
+            'handlers': ['root_logs'],
             'level': 'DEBUG',
         },
         'test': {
-            'handlers': ['file'],
+            'handlers': ['test_logs'],
             'level': 'DEBUG',
             'propagate': False
         },
