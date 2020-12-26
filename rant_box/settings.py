@@ -122,13 +122,13 @@ LOGGING = {
             'class': 'logging.StreamHandler',
             'formatter': 'default',
         },
-        'test_logs': {
+        'test_log_file': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
             'filename': 'logs/test.log',
             'formatter': 'default',
         },
-        'root_logs': {
+        'root_log_file': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
             'filename': 'logs/root.log',
@@ -143,11 +143,11 @@ LOGGING = {
 
     'loggers': {
         'root': {
-            'handlers': ['root_logs'],
+            'handlers': ['root_log_file'],
             'level': 'DEBUG',
         },
         'test': {
-            'handlers': ['test_logs'],
+            'handlers': ['test_log_file'],
             'level': 'DEBUG',
             'propagate': False
         },
