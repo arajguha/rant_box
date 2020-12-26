@@ -1,3 +1,5 @@
+import logging
+
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -31,7 +33,7 @@ class UserRegistrationView(APIView):
             return Response({'message': 'User created successfully'}, status=status.HTTP_201_CREATED)
 
         except Exception as e:
-            print(f'[*] {e}')
+            logging.getLogger('root').error(f'[*] {e}')
             return Response(
                 {'error_message': 'some error occurred. User creation failed.'},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR

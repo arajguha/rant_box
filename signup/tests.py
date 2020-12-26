@@ -1,3 +1,5 @@
+import logging
+
 from django.test import TestCase
 from rest_framework.test import APIRequestFactory
 from .views import UserRegistrationView
@@ -18,7 +20,10 @@ class UserSignupTest(TestCase):
         request = factory.post('signup/', user)
         view = UserRegistrationView.as_view()
         response = view(request)
+
+        logging.getLogger('test').debug(f'[test_user_signup] result: {response.status_code} expected: {201}')
         self.assertEqual(response.status_code, 201)
+
 
     def test_user_different_pwd(self):
         """ passwords do not match """
@@ -31,7 +36,10 @@ class UserSignupTest(TestCase):
         request = factory.post('signup/', user)
         view = UserRegistrationView.as_view()
         response = view(request)
+
+        logging.getLogger('test').debug(f'[test_user_different_pwd] result: {response.status_code} expected: {400}')
         self.assertEqual(response.status_code, 400)
+
 
     def test_user_no_confirm_pwd(self):
         """ no confirm password provided """
@@ -43,7 +51,10 @@ class UserSignupTest(TestCase):
         request = factory.post('signup/', user)
         view = UserRegistrationView.as_view()
         response = view(request)
+
+        logging.getLogger('test').debug(f'[test_user_no_confirm_pwd] result: {response.status_code} expected: {400}')
         self.assertEqual(response.status_code, 400)
+
 
     def test_same_user_signup(self):
         """ user already exists """
@@ -57,4 +68,6 @@ class UserSignupTest(TestCase):
         request = factory.post('signup/', user)
         view = UserRegistrationView.as_view()
         response = view(request)
+
+        logging.getLogger('test').debug(f'[test_same_user_signup] result: {response.status_code} expected: {400}')
         self.assertEqual(response.status_code, 400)
