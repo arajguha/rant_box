@@ -153,7 +153,7 @@ LOGGING = {
 
     'loggers': {
         'root': {
-            'handlers': ['root_log_file'],
+            'handlers': ['root_log_file', 'console'],
             'level': 'DEBUG',
         },
         'test': {
