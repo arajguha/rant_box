@@ -1,8 +1,8 @@
 import logging
 
 from rest_framework import generics
-from .serializers import RantPostSerializer
-from .models import RantPost
+from .serializers import RantPostSerializer, PostReactSerializer
+from .models import RantPost, PostReact
 from rest_framework.permissions import IsAuthenticated
 from .permissions import RantPostUpdateDeletePermissions
 from rest_framework.views import APIView
@@ -44,3 +44,41 @@ class UserPostsView(APIView):
             logging.getLogger('root').error(str(e))
             return Response({'message': 'some error occured'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     
+
+class PostReactView(APIView):
+    """ React to a post """
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        try:
+            user_id = request.user.id
+            post_id = request.data['post_id']
+
+            post = RantPost.objects.filter(pk=post_id)
+            if not post.exists():
+                logging.getLogger('root').error('post not found')
+                return Response({'message': 'post not found'}, status=status.HTTP_400_BAD_REQUEST)
+            
+
+            reaction = PostReact.objects.filter(user=user_id)
+            if reaction.exists():
+                logging.getLogger('root').error('reaction removed')
+                reaction.delete()
+                return Response({'message': 'reaction removed'}, status=status.HTTP_200_OK)
+
+
+            sz_data = {'post': post_id, 'user': user_id}
+            post_react_serializer = PostReactSerializer(data=sz_data)
+            
+            if post_react_serializer.is_valid():
+                post_react_serializer.save()
+                logging.getLogger('root').debug('reaction saved')
+                return Response({'message': 'reaction added'}, status=status.HTTP_201_CREATED)
+            
+            logger.getLogger('root').error(post_react_serializer.errors)
+            logging.getLogger('root').error('serializer error')
+            return Response({'message': 'some error ocurred'}, status=status.HTTP_400_BAD_REQUEST) 
+        
+        except Exception as e:
+            logging.getLogger('root').error(str(e))
+            return Response({'message': 'some error occured'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

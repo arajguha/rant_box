@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import RantPost
+from .models import RantPost, PostReact
 
 
 class RantPostSerializer(serializers.ModelSerializer):
@@ -14,3 +14,9 @@ class RantPostSerializer(serializers.ModelSerializer):
         title_split = rant_post.title.split(' ')
         title_split = list(map(lambda x: x.lower(), title_split))
         return '-'.join(title_split)
+
+
+class PostReactSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PostReact
+        fields = '__all__'

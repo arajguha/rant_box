@@ -7,4 +7,5 @@ urlpatterns = [
     path('', views.RantPostListCreateView.as_view(), name='rant-post'),
     path('<int:pk>/', views.RantPostRetrieveUpdateDestroyView.as_view(), name='rant-post-detail'),
     path('my-rants/', views.UserPostsView.as_view(), name='user-posts'),
+    path('react/', views.PostReactView.as_view(), name='post-react')
 ]

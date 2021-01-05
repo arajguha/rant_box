@@ -25,10 +25,6 @@ class RantPost(models.Model):
     class Meta:
         ordering = ['-created_on']
 
-    # @property
-    # def slug(self):
-    #     return '-'.join(self.text.split(' '))
-
     def __str__(self):
         return self.title
 
@@ -37,3 +33,12 @@ class RantPost(models.Model):
 def create_auth_token(sender, instance=None, created=False, **kwargs):
     if created:
         Token.objects.create(user=instance)
+
+
+class PostReact(models.Model):
+    post = models.ForeignKey(RantPost, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'(user: {self.user}, post: {self.post})'
+
