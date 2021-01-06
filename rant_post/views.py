@@ -102,7 +102,7 @@ def reaction_info_view(request, post_id):
     if not post_reactions.exists():
         return Response({
             'post_id': post_id,
-            'users_list': 0,
+            'users_count': 0,
             'self_reacted': False
         }, status=status.HTTP_200_OK)
 
