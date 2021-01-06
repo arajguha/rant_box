@@ -8,6 +8,7 @@ from .permissions import RantPostUpdateDeletePermissions
 from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.response import Response
+from rest_framework.decorators import api_view, permission_classes
 
 
 class RantPostListCreateView(generics.ListCreateAPIView):
@@ -46,7 +47,7 @@ class UserPostsView(APIView):
     
 
 class PostReactView(APIView):
-    """ React to a post """
+    """ React to a post. Add and remove reaction """
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
@@ -56,24 +57,31 @@ class PostReactView(APIView):
 
             post = RantPost.objects.filter(pk=post_id)
             if not post.exists():
-                logging.getLogger('root').error('post not found')
-                return Response({'message': 'post not found'}, status=status.HTTP_400_BAD_REQUEST)
-            
+                logging.getLogger('root').error('post does not exists. invalid post id')
+                return Response({'message': 'post does not exists. invalid post id'}, status=status.HTTP_400_BAD_REQUEST)
 
-            reaction = PostReact.objects.filter(user=user_id)
-            if reaction.exists():
-                logging.getLogger('root').error('reaction removed')
-                reaction.delete()
-                return Response({'message': 'reaction removed'}, status=status.HTTP_200_OK)
+            reactions = PostReact.objects.filter(post=post_id)
+            for reaction in reactions:
+                if reaction.user.id == user_id:
+                    # user already reacted. Hence remove reaction record
+                    reaction.delete()
+                    return Response({
+                        'message': 'reaction removed',
+                        'reaction_status': False
+                    }, status=status.HTTP_200_OK)
 
-
+            # user not reacted. Add reaction record
             sz_data = {'post': post_id, 'user': user_id}
             post_react_serializer = PostReactSerializer(data=sz_data)
             
             if post_react_serializer.is_valid():
                 post_react_serializer.save()
+
                 logging.getLogger('root').debug('reaction saved')
-                return Response({'message': 'reaction added'}, status=status.HTTP_201_CREATED)
+                return Response({
+                    'message': 'reaction added', 
+                    'reaction_status': True
+                }, status=status.HTTP_201_CREATED)
             
             logger.getLogger('root').error(post_react_serializer.errors)
             logging.getLogger('root').error('serializer error')
@@ -82,3 +90,33 @@ class PostReactView(APIView):
         except Exception as e:
             logging.getLogger('root').error(str(e))
             return Response({'message': 'some error occured'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def reaction_info_view(request, post_id):
+    """ returns info related to reactions for a particular post """
+
+    post_reactions = PostReact.objects.filter(post=post_id)
+    
+    if not post_reactions.exists():
+        return Response({
+            'post_id': post_id,
+            'users_list': 0,
+            'self_reacted': False
+        }, status=status.HTTP_200_OK)
+
+    users_list = []
+    self_reacted = False
+    for reaction in post_reactions:
+        if reaction.user == request.user:
+            self_reacted = True
+        users_list.append(reaction.user.username)
+
+    return Response({
+        'post_id': post_id,
+        'users_count': len(users_list),
+        'self_reacted': self_reacted
+    }, status=status.HTTP_200_OK)
+
+    #return Response('testing')
