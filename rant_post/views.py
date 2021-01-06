@@ -64,6 +64,7 @@ class PostReactView(APIView):
             for reaction in reactions:
                 if reaction.user.id == user_id:
                     # user already reacted. Hence remove reaction record
+                    logging.getLogger('root').debug('reaction removed')
                     reaction.delete()
                     return Response({
                         'message': 'reaction removed',
