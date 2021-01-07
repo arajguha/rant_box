@@ -21,5 +21,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('rant-posts/', include('rant_post.urls')),
     path('login/', views.obtain_auth_token),
-    path('signup/', include('signup.urls'))
+    path('signup/', include('signup.urls')),
+    path('generate-report/', include('reportapp.urls'))
 ]
