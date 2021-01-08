@@ -1,0 +1,23 @@
+[33m835baf2[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m)[m add view to export user posts as list of lists
+[33m1fd013d[m[33m ([m[1;32mfeature/gen_report[m[33m)[m add view to export user posts as csv
+[33m87dd370[m add one line for log purpose
+[33mc8b7a34[m minor bug fix
+[33m7a779b0[m fix Post Reaction issues and add reaction info view
+[33m36f3e07[m Add PostReact model and view for adding removing reactions
+[33ma6d782c[m add view to fetch user sepcific posts
+[33md6cfb8a[m change default page size to 4
+[33me3c00d6[m change permissions to IsAuthenticated
+[33m77e8e23[m add dotenv for reading environment variables
+[33md59dcf4[m update log settings
+[33mb993f43[m add log entry for signup views
+[33mac5b6f3[m update log settings
+[33mb77d6b2[m add logging support
+[33m7ea41ba[m add unit test for user signup
+[33m5358803[m Create Readme
+[33m559889d[m test commit
+[33mbd320c7[m update settings file
+[33m0306cc2[m add limit offset pagination
+[33mb03e61e[m remove mixin import from view
+[33m498a767[m feature/add user signup
+[33m7193c79[m add object level permissions for post
+[33m38f90d9[m initial commit
