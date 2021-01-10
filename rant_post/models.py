@@ -17,7 +17,7 @@ class RantPost(models.Model):
     ]
 
     title = models.CharField(max_length=100, blank=False)
-    text = models.TextField(max_length=1000, blank=False)
+    text = models.TextField(max_length=2000, blank=False)
     feeling_level = models.CharField(max_length=3, choices=FEELING_CHOICES, default='N')
     created_on = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
