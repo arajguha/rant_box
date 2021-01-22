@@ -122,15 +122,14 @@ def reaction_info_view(request, post_id):
 
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
 def get_feelings_dict(request):
-    feelings_map = dict([
+    feelings_map = [
         ('S', 'Sad'),
         ('VS', 'Very Sad'),
         ('N', 'Neutral'),
         ('P', 'Pissed'),
         ('EP', 'Extremely Pissed'),
         ('FF', 'Fucking Furious')
-    ])
+    ]
 
     return Response(feelings_map, status=status.HTTP_200_OK)
