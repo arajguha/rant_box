@@ -28,7 +28,7 @@ For quick local setup, use sqlite DB.
 Following are the steps to change the DB to sqlite DB which will run in memory.
 
 In settings.py in the root directory change the Database settings. The current DB settings is:  
-	`
+	
 	
 	DATABASES = {
 		'default': {
@@ -41,11 +41,10 @@ In settings.py in the root directory change the Database settings. The current D
 		}
 
 	}
-` 
+ 
 
 Change it to :
-`
-	
+
 	DATABASES = {
 		'default': {
 			'ENGINE': 'django.db.backends.sqlite3',
