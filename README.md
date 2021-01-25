@@ -5,6 +5,9 @@
 >Note:  Using Anaconda for virtual environment creation. Feel free to use virtualenv or something like that.
 
 - Download [Anaconda ](https://docs.anaconda.com/anaconda/user-guide/getting-started/)  
+
+> [Anaconda Cheatsheet](https://docs.conda.io/projects/conda/en/4.6.0/_downloads/52a95608c49671267e40c689e0bc00ca/conda-cheatsheet.pdf)
+
 - Open Anaconda prompt
 - Use command `conda create --name RantBox py=3.8` This will create a new virtual environment and also install pip and other useful packages in the environment.
 - Next use command `conda activate RantBox`to activate the envrionment
