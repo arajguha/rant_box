@@ -25,7 +25,7 @@ The secret key can be generated locally or from [here](https://miniwebtool.com/d
 After the installations are complete,  run the database migrations. But before that the DB needs to be configured.
 
 #### Log Directory
-Add a directory in the project root and name it "log".
+Add a directory in the project root and name it "logs".
 
 #### Steps for using DB locally
 PostgreSQL is used. It can be installed from [here](https://www.postgresql.org/). 
