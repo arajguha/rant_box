@@ -15,7 +15,7 @@
 - Run `pip install -r requirements.txt` to install the python packages used in the project.
 > Note: `pip install <package>` or `conda install <package>` can be used to seperately install packages if needed.
 
-**Note:**  Django needs a secret key. Inside the .env file and set  a value for 				DJANGO_SECRET_KEY .
+**Note:**  Django needs a secret key. Inside the .env file set  a value for 				DJANGO_SECRET_KEY .
 > DJANGO_SECRET_KEY='put_your_secret_key_here'
 
 **Location of .env file: /project-root/rant_box/**
