@@ -42,3 +42,9 @@ class PostReact(models.Model):
     def __str__(self):
         return f'(user: {self.user}, post: {self.post})'
 
+
+class CategoryOption(models.Model):
+    category_name = models.CharField(max_length=20)
+
+    def __str__(self):
+        return category_name
