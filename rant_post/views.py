@@ -2,7 +2,7 @@ import logging
 
 from rest_framework import generics
 from .serializers import RantPostSerializer, PostReactSerializer
-from .models import RantPost, PostReact
+from .models import RantPost, PostReact, CategoryOption
 from rest_framework.permissions import IsAuthenticated
 from .permissions import RantPostUpdateDeletePermissions
 from rest_framework.views import APIView
@@ -122,14 +122,30 @@ def reaction_info_view(request, post_id):
 
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def get_feelings_dict(request):
-    feelings_map = [
-        ('S', 'Sad'),
-        ('VS', 'Very Sad'),
-        ('N', 'Neutral'),
-        ('P', 'Pissed'),
-        ('EP', 'Extremely Pissed'),
-        ('FF', 'Fucking Furious')
-    ]
+    try:
+        feelings_map = [
+            ('S', 'Sad'),
+            ('VS', 'Very Sad'),
+            ('N', 'Neutral'),
+            ('P', 'Pissed'),
+            ('EP', 'Extremely Pissed'),
+            ('FF', 'Fucking Furious')
+        ]
 
-    return Response(feelings_map, status=status.HTTP_200_OK)
+        return Response(feelings_map, status=status.HTTP_200_OK)
+    except:
+        return Response({'message': 'some error occured'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_categories_list(request):
+    try:
+        category_list = CategoryOption.objects.all()
+        result_list = list(map(str, category_list))
+        print(result_list)
+        return Response(result_list, status=status.HTTP_200_OK)
+    except:
+        return Response({'message': 'some error occured'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
