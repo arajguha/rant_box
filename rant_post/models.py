@@ -6,6 +6,10 @@ from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
 
 
+def default_category():
+        return [ 'General' ]
+
+
 class CategoryOption(models.Model):
     category_name = models.CharField(primary_key=True, max_length=20)
 
@@ -28,7 +32,7 @@ class RantPost(models.Model):
     feeling_level = models.CharField(max_length=3, choices=FEELING_CHOICES, default='N')
     created_on = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
-    category = models.ForeignKey(CategoryOption, default='General', on_delete=models.SET_DEFAULT)
+    category = models.ManyToManyField(CategoryOption, default=default_category)
 
     class Meta:
         ordering = ['-created_on']
