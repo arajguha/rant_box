@@ -32,7 +32,7 @@ class RantPost(models.Model):
     feeling_level = models.CharField(max_length=3, choices=FEELING_CHOICES, default='N')
     created_on = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
-    category = models.ManyToManyField(CategoryOption, default=default_category)
+    category_list = models.ManyToManyField(CategoryOption, default=default_category)
 
     class Meta:
         ordering = ['-created_on']

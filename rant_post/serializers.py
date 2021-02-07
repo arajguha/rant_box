@@ -7,7 +7,7 @@ class RantPostSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = RantPost
-        fields = ['id', 'title', 'text', 'category', 'feeling_level', 'created_on', 'author', 'slug_field']
+        fields = ['id', 'title', 'text', 'category_list', 'feeling_level', 'created_on', 'author', 'slug_field']
         read_only_fields = ['author']
 
     def get_slug_field(self, rant_post):
